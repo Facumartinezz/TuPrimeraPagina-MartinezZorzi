@@ -1,0 +1,21 @@
+    {% extends 'PrimeraPagina/base.html' %}
+    {% block title %}
+        Alumnos - Colegio Coder
+    {% endblock title %}
+    {% block content_title %}
+
+
+
+    <h1>Lista de Alumnos</h1>
+    {% endblock content_title %}
+    {% block content %}
+        <a href="{% url 'PrimeraPagina:ingreso_alumnos' %}" class="btn btn-primary mb-3">Agregar Alumno</a>
+        <ul class="list-group">
+            {% for alumno in alumnos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ alumno.nombre }} {{ alumno.apellido }}</span>
+                    <span class="badge bg-primary rounded-pill">Estudiante</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endblock content %}
