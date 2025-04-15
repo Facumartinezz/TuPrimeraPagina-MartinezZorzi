@@ -16,26 +16,7 @@
                 <div class="card-body">
                     <form method="post" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese su nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Ingrese su apellido" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Ingrese su correo electrónico" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="profesion" class="form-label">Profesión</label>
-                            <input type="text" name="profesion" id="profesion" class="form-control" placeholder="Ingrese su profesión" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contraseña" class="form-label">Contraseña</label>
-                            <input type="password" name="contraseña" id="contraseña" class="form-control" placeholder="Ingrese una contraseña" required>
-                        </div>
+                        {{ form.as_p }}  <!-- Renderiza automáticamente los campos del formulario -->
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary">Registrar</button>
                             <a href="{% url 'PrimeraPagina:index' %}" class="btn btn-secondary">Cancelar</a>

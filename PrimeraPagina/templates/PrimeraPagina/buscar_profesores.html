@@ -1,0 +1,28 @@
+{% extends "PrimeraPagina/base.html" %}
+
+{% block title %}Buscar Profesores - Colegio Coder{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center">Buscar Profesores</h1>
+    <form method="get" class="my-4">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    {% if profesores is not None %}
+        <h2 class="mt-4">Resultados:</h2>
+        {% if profesores %}
+            <ul class="list-group">
+                {% for profesor in profesores %}
+                    <li class="list-group-item">
+                        <strong>{{ profesor.nombre }} {{ profesor.apellido }}</strong> - {{ profesor.profesion }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No se encontraron profesores con ese término.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
