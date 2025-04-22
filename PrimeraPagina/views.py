@@ -1,7 +1,39 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Alumno, Profesor, Post 
-from .forms import AlumnoForm, BuscarProfesorForm, ProfesorForm
+from .models import Alumno, Profesor, Post, Avatar
+from .forms import AlumnoForm, BuscarProfesorForm, ProfesorForm, EditarPerfilForm, AvatarForm
 from django.db.models import Q
+from django.shortcuts import render
+from django.contrib.auth.forms import UserChangeForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def editar_perfil(request):
+    if request.method == 'POST':
+        form = EditarPerfilForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            # Manejar el avatar
+            avatar, created = Avatar.objects.get_or_create(user=user)
+            if 'avatar' in request.FILES:
+                avatar.imagen = request.FILES['avatar']
+                avatar.save()
+            return redirect('PrimeraPagina:index')  # Redirige al inicio después de guardar
+    else:
+        form = EditarPerfilForm(instance=request.user)
+    return render(request, 'PrimeraPagina/editar_perfil.html', {'form': form})
+
+@login_required
+def subir_avatar(request):
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=request.user.avatar)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')
+    else:
+        form = AvatarForm(instance=request.user.avatar)
+    return render(request, 'subir_avatar.html', {'form': form})
 
 def lista_alumnos(request):
     alumnos = Alumno.objects.all()
@@ -15,6 +47,7 @@ def index(request):
     posteos = Post.objects.all().order_by('-fecha_creacion')  # Ordenar por fecha de creación (más recientes primero)
     return render(request, 'PrimeraPagina/index.html', {'posteos': posteos})
 
+@login_required
 def ingreso_alumnos(request):
     if request.method == "POST":
         form = AlumnoForm(request.POST)
@@ -30,8 +63,31 @@ def ingreso_alumnos(request):
         form = AlumnoForm()
     return render(request, 'PrimeraPagina/ingreso_alumnos.html', context={'form': form})
 
-from django.shortcuts import render
+@login_required
+def actualizar_estudiante(request, pk):
+    estudiante = get_object_or_404(Alumno, pk=pk)
+    if request.method == 'POST':
+        form = AlumnoForm(request.POST, instance=estudiante)
+        if form.is_valid():
+            form.save()
+            return redirect('PrimeraPagina:lista_alumnos')
+    else:
+        form = AlumnoForm(instance=estudiante)
+    return render(request, 'PrimeraPagina/actualizar_estudiante.html', {'form': form})
 
+def detalle_alumno(request, pk):
+    alumno = get_object_or_404(Alumno, pk=pk)  # Obtiene el alumno por su ID o lanza un error 404 si no existe
+    return render(request, 'PrimeraPagina/detalle_alumno.html', {'alumno': alumno})
+
+@login_required
+def eliminar_alumno(request, pk):
+    alumno = get_object_or_404(Alumno, pk=pk)  # Obtiene el alumno por su ID o lanza un error 404 si no existe
+    if request.method == "POST":
+        alumno.delete()  # Elimina el alumno de la base de datos
+        return redirect('PrimeraPagina:lista_alumnos')  # Redirige a la lista de alumnos
+    return render(request, 'PrimeraPagina/eliminar_alumno.html', {'alumno': alumno})
+
+@login_required
 def registro_profesores(request):
     if request.method == "POST":
         form = ProfesorForm(request.POST)
@@ -42,6 +98,7 @@ def registro_profesores(request):
         form = ProfesorForm()
     return render(request, "PrimeraPagina/registro_profesores.html", {"form": form})
 
+@login_required
 def publica_post(request):
     if request.method == "POST":
         titulo = request.POST.get("titulo")

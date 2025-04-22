@@ -16,14 +16,26 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 app_name = 'PrimeraPagina'
 urlpatterns = [
     path('', views.index, name='index'),
     path('alumnos/', views.lista_alumnos, name='lista_alumnos'),
     path("alumnos/create", views.ingreso_alumnos, name="ingreso_alumnos"),
+    path('alumnos/<int:pk>/update', views.actualizar_estudiante, name='actualizar_estudiante'),
+    path('alumnos/<int:pk>/', views.detalle_alumno, name='detalle_alumno'),  
+    path('alumnos/<int:pk>/delete', views.eliminar_alumno, name='eliminar_alumno'), 
     path('profesores/create', views.registro_profesores, name='registro_profesores'),
     path('post/create', views.publica_post, name='publica_post'),
     path('profesores/buscar', views.buscar_profesores, name='buscar_profesores'),
-    
+    path('editarPerfil/', views.editar_perfil, name='editar_perfil'),
+    path('login/', auth_views.LoginView.as_view(template_name='PrimeraPagina/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('subir_avatar/', views.subir_avatar, name='subir_avatar'),
 ]
+if settings.DEBUG: # hacemos esta validación para que servir los estaticos desde django solo en desarrollo
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,33 @@
+{% extends 'PrimeraPagina/base.html' %}
+
+{% block title %}
+    Detalle del Alumno - {{ alumno.nombre }} {{ alumno.apellido }}
+{% endblock title %}
+
+{% block content_title %}
+    <h1 class="text-center my-4">Detalle del Alumno</h1>
+{% endblock content_title %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre: {{ alumno.nombre }}</h5>
+                    <p class="card-text"><strong>Apellido:</strong> {{ alumno.apellido }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ alumno.email }}</p>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'PrimeraPagina:lista_alumnos' %}" class="btn btn-secondary">Volver a la lista</a>
+                        <a href="{% url 'PrimeraPagina:actualizar_estudiante' alumno.pk %}" class="btn btn-warning">Editar</a>
+                        <form method="post" action="{% url 'PrimeraPagina:eliminar_alumno' alumno.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

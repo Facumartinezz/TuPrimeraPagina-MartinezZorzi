@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,6 +32,34 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'PrimeraPagina:buscar_profesores' %}">Buscar Profesor</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if user.avatar.imagen %}
+                                        <img src="{{ user.avatar.imagen.url }}" alt="Avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                    {% else %}
+                                        <img src="{% static 'default-avatar.png' %}" alt="Avatar" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                    {% endif %}
+                                    <span>{{ user.username }}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><span class="dropdown-item-text"><strong>Email:</strong> {{ user.email }}</span></li>
+                                    <li><a class="dropdown-item" href="{% url 'PrimeraPagina:editar_perfil' %}">Editar Perfil</a></li>
+                                    <li>
+                                        <form method="post" action="{% url 'PrimeraPagina:logout' %}" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item">Cerrar Sesión</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'PrimeraPagina:login' %}">Iniciar Sesión</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
