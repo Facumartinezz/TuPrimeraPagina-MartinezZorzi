@@ -1,4 +1,7 @@
 #Entrega final!!
+LINK AL VIDEO EXPLICATIVO
+https://drive.google.com/drive/folders/1HCSbvg2zqGn_6Tmb4a_FYOKbSd2DaZ9s?usp=drive_link
+
 Descripción del Proyecto
 "Tu Primera Página" es una aplicación web desarrollada como parte del curso de Python en CoderHouse. Su objetivo es proporcionar una plataforma para gestionar alumnos, profesores y publicaciones de blogs, permitiendo a los usuarios autenticados interactuar con diversas funcionalidades de manera sencilla y eficiente.
 
