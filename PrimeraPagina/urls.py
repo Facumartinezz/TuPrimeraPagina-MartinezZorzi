@@ -36,6 +36,11 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='PrimeraPagina/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('subir_avatar/', views.subir_avatar, name='subir_avatar'),
+    path('about/', views.about, name='about'),
+    path('pages/', views.pages, name='pages'),  # Ruta para la vista de blogs
+    path('pages/<int:pk>/', views.detalle_blog, name='detalle_blog'),  # Ruta para el detalle del blog
+
+
 ]
 if settings.DEBUG: # hacemos esta validación para que servir los estaticos desde django solo en desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

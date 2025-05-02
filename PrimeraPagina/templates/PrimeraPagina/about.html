@@ -1,0 +1,29 @@
+{% extends 'PrimeraPagina/base.html' %}
+
+{% block title %}
+    Acerca de mí - Colegio Coder
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center">Acerca de mí</h1>
+    <p class="lead text-center">Bienvenido a la página "Acerca de mí". Aquí puedes encontrar información sobre el creador de este proyecto.</p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2>Sobre el Proyecto</h2>
+                    <p>Este proyecto fue desarrollado como parte del curso de Python en CoderHouse. Su objetivo es aprender a crear aplicaciones web utilizando Django.</p>
+                    <h2>Sobre el Creador de la app</h2>
+                    <p>Mi nombre es Facundo Martinez Zorzi, y soy un apasionado de la programación y el desarrollo web. Este proyecto refleja mi aprendizaje y dedicación en el mundo de la tecnología.</p>
+                    <h2>Contacto</h2>
+                    <p>Si deseas contactarme, puedes enviarme un correo a: <a href="facundomzorzi@hotmail.com">facundomzorzi@hotmail.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'PrimeraPagina:pages' %}" class="btn btn-primary">Ir a Blogs</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

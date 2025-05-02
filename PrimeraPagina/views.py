@@ -121,3 +121,15 @@ def buscar_profesores(request):
             )
     
     return render(request, 'PrimeraPagina/buscar_profesores.html', {'form': form, 'profesores': profesores})
+
+def about(request):
+    return render(request, 'PrimeraPagina/about.html')
+
+def pages(request):
+    # Aquí puedes cargar los blogs desde la base de datos
+    blogs = Post.objects.all()
+    return render(request, 'PrimeraPagina/pages.html', {'blogs': blogs})
+
+def detalle_blog(request, pk):
+    blog = get_object_or_404(Post, pk=pk)  # Obtiene el blog por su ID o lanza un error 404 si no existe
+    return render(request, 'PrimeraPagina/detalle_blog.html', {'blog': blog})
